@@ -5,15 +5,15 @@ public class WhiteNoise extends Sound{
 	public WhiteNoise(double d){
 		duration = d;
 	}
+        @Override
 	public Sample generateSample(){
-		double f = 44100*duration;
-		int j = (int)f;
-		double[] temp = new double[j];
-		for(int i = 0; i < j; i++){
-			temp[i] = Math.random();
-		}
-		setSample(new Sample(new double[0]));
-		return new Sample(new double[0]);
+            int l = (int)(SAMPLING_RATE*duration);
+            double[] tone = new double[l];
+
+            for (int i = 0; i < l; i++) {
+                tone[i] = Math.random();
+            }
+            return new Sample(tone);
 	}
 }
 

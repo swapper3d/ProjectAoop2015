@@ -23,10 +23,13 @@ public class Model {
         {
             keys.add(new Key());
         }
-        Sound s = new WhiteNoise(2.0);
-        Sample samp = s.generateSample();
-        s.setSample(samp);
-        keys.get(0).setSound(s);
+        Sound t1 = new Tone(600.0, 0.2);
+        keys.get(0).setSound(t1);
+        Sound t2 = new Tone(200.0, 0.1);
+        keys.get(1).setSound(t2);
+        Sound w = new WhiteNoise(0.2);
+        keys.get(2).setSound(w);
+        
     }
     
     
