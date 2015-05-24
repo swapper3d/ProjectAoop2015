@@ -5,10 +5,99 @@
  */
 package aoop;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ArrayList;
+
 /**
  *
  * @author Daniel
  */
 public class Model {
     
+    public Model()
+    {
+        soundTypes = new LinkedList<>();
+        keys = new ArrayList<>();
+        for(int i = 0; i < 10 ; i++)
+        {
+            keys.add(new Key());
+        }
+        Sound s = new WhiteNoise(2.0);
+        Sample samp = s.generateSample();
+        s.setSample(samp);
+        keys.get(0).setSound(s);
+    }
+    
+    
+    public Iterator<Key> getKeys()
+    {
+        return keys.iterator();
+    }
+    /*public Iterator<SoundIcon>[] getAllTracks()
+    {
+        Iterator[] it = {soundTrack[0].iterator(),
+                         soundTrack[1].iterator(),
+                         soundTrack[2].iterator(),
+                         soundTrack[3].iterator()};
+        
+        return it;
+    }
+    
+    public Iterator<SoundIcon> getTrack1()
+    {
+        return soundTrack[0].iterator();
+    }
+    
+    public Iterator<SoundIcon> getTrack2()
+    {
+        return soundTrack[1].iterator();
+    }
+    
+    public Iterator<SoundIcon> getTrack3()
+    {
+        return soundTrack[2].iterator();
+    }
+    
+    public Iterator<SoundIcon> getTrack4()
+    {
+        return soundTrack[3].iterator();
+    }*/
+    
+    public void addController(Controller c)
+    {
+        this.c = c;
+    }
+    
+    public void addView(View v)
+    {
+        this.v = v;
+    }
+    
+    public Iterator<SoundIcon> getTypes()
+    {
+        return soundTypes.iterator();
+    }
+    
+    
+    public int getTypeLength()
+    {
+        return soundTypes.size();
+    }
+    
+    public void addType(SoundIcon s)
+    {
+        if(s != null)
+        {
+            soundTypes.add(s);
+        }else
+        {
+            throw new NullPointerException();
+        }
+    }
+    private final LinkedList<SoundIcon> soundTypes;
+    private final ArrayList<Key> keys;
+    private Controller c;
+    private View v;
+    public int KEYBOARD_SIZE = 10;
 }

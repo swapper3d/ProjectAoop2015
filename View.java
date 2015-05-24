@@ -8,9 +8,7 @@ package aoop;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *
@@ -18,28 +16,26 @@ import javax.swing.JPanel;
  */
 public class View extends JFrame
 {
-    public View(Model m, Controller c)
-    {
-        model = m;
-        controller = c;
-    }
+    public View()
+    {}
     
     public void addModel(Model m)
     {
-        model = m;
+        this.m = m;
     }
     
     public void addController(Controller c)
     {
-        controller = c;
+        this.c = c;
     }
     
     public void build()
     {
-        ToolBar toolBar = new ToolBar();
-        Menu menu = new Menu();
-        JPanel main = new JPanel();
-        main.setBorder(BorderFactory.createEtchedBorder());
+        ToolBar toolBar = new ToolBar(m);
+        toolBar.addMouseListener(c.getMenuPressed());
+        Menu menu = new Menu(m, c);
+        MainFrame main = new MainFrame(m);
+        main.addMouseListener(c.getKeyPressed());
         setTitle("MUSIC");
         
         setJMenuBar(menu);
@@ -47,18 +43,17 @@ public class View extends JFrame
         add(toolBar,BorderLayout.NORTH);
         add(main, BorderLayout.CENTER);
         
-        //adding standard sounds
-        toolBar.add(new SoundIcon());
-        toolBar.add(new SoundIcon());
-        toolBar.add(new SoundIcon());
+        toolBar.addSound( new SoundIcon( Color.BLACK, new Dimension(40,40) ) );
+        toolBar.addSound( new SoundIcon( Color.RED, new Dimension(40,40) ) );
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         pack();
+        toolBar.repaint();
         setVisible(true);
     }
     
-    private Model model;
-    private Controller controller;
+    private Model m;
+    private Controller c;
     public final int FRAME_WIDTH = 640;
     public final int FRAME_HEIGHT = 480;
 }

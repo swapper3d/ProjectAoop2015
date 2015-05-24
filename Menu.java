@@ -16,8 +16,10 @@ import javax.swing.JMenuItem;
  */
 public class Menu extends JMenuBar
 {
-    public Menu()
+    public Menu(final Model m, final Controller c)
     {
+        this.m = m;
+        this.c = c;
         menu = new JMenu("File");
         newSound = new JMenuItem("New Sound");
         exit = new JMenuItem("Exit");
@@ -31,5 +33,8 @@ public class Menu extends JMenuBar
     private JMenu menu;
     private JMenuItem newSound;
     private JMenuItem exit;
+    private JMenuItem settings;
+    private Model m;
+    private Controller c;
     
 }
