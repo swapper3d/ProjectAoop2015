@@ -25,10 +25,16 @@ public class Model {
         }
         Sound t1 = new Tone(600.0, 0.2);
         keys.get(0).setSound(t1);
-        Sound t2 = new Tone(200.0, 0.1);
+        Sound t2 = new Tone(600.0, 0.1);
+        t2.addFilter(new GainFilter(5));
         keys.get(1).setSound(t2);
         Sound w = new WhiteNoise(0.2);
         keys.get(2).setSound(w);
+        Sound v = new WhiteNoise(0.1);
+        keys.get(3).setSound(v);
+        v.addFilter(new KarplusStrongFilter(100, 0.99));
+        
+        
         
     }
     

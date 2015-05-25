@@ -1,29 +1,35 @@
 package aoop;
 
+import java.util.ArrayList;
+
 public abstract class Sound implements FilterableSound{
 	private double duration;
-	public int SAMPLING_RATE = StdAudio.SAMPLE_RATE;
+	public final int SAMPLING_RATE = StdAudio.SAMPLE_RATE;
 	private Sample sample;
-	//private ArrayList
-	
+	private final ArrayList<Filter> filters;
+        public Sound(){
+            filters = new ArrayList();
+        }
+        @Override
 	public void play(){
-                sample = generateSample();
-		if(sample != null)
-			StdAudio.play(sample.toArray());
-                else
-                    System.out.println("null sound output");
+            sample = generateSample();
+            applyFilters();
+            duration = sample.toArray().length/SAMPLING_RATE;
+            StdAudio.play(sample.toArray());
 	}
+        
 	public void addFilter(Filter f){
-
+            filters.add(f);
 	}
+        
 	private void applyFilters(){
+            for(Filter f : filters){
+                sample = f.apply(sample);
+            }
+	}
 
-	}
-	public void setSample(Sample s){
-		sample = s;
-	}
 	public double getDuration(){
-		return 0.0;	
+		return duration;	
 	}
 }
 
