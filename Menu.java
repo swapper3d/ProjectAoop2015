@@ -22,12 +22,17 @@ public class Menu extends JMenuBar
         this.c = c;
         menu = new JMenu("File");
         newSound = new JMenuItem("New Sound");
+        settings = new JMenuItem("Settings");
         exit = new JMenuItem("Exit");
         add(menu);
         
         menu.add(newSound);
+        menu.add(settings);
         menu.add(exit);
-        exit.addActionListener(e ->    System.exit(0));
+        
+        newSound.addActionListener(c.newSound());
+        settings.addActionListener(c.settings());
+        exit.addActionListener(c.menuExit());
     }
     
     private JMenu menu;

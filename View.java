@@ -6,9 +6,16 @@
 package aoop;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JSlider;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -29,31 +36,85 @@ public class View extends JFrame
         this.c = c;
     }
     
+    /**
+     * adds filter. needs build() to have been done
+     * @param f filter to be added
+     */
+    /*public void addFilter(Filter f)
+    {
+        //toolBar.addFilter(f);
+        //pack();
+    }*/
+    
     public void build()
     {
-        ToolBar toolBar = new ToolBar(m);
-        toolBar.addMouseListener(c.getMenuPressed());
+        /* Initializing components */
+        toolBar = new ToolBar(m, c);
+        popup = new JPopupMenu();
+        apply = new JButton();
         Menu menu = new Menu(m, c);
         MainFrame main = new MainFrame(m);
-        main.addMouseListener(c.getKeyPressed());
-        setTitle("MUSIC");
-        
+        JButton play = new JButton();
+        JPanel southPanel = new JPanel();
+        southPanel.add(play);
+        /* Configuring frames */
         setJMenuBar(menu);
         setLayout(new BorderLayout());
-        add(toolBar,BorderLayout.NORTH);
-        add(main, BorderLayout.CENTER);
-        
-        toolBar.addSound( new SoundIcon( Color.BLACK, new Dimension(40,40) ) );
-        toolBar.addSound( new SoundIcon( Color.RED, new Dimension(40,40) ) );
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        setTitle("Sound Filtering");
+        
+        /* setting up scale popup */
+        apply.setText("apply");
+        play.addActionListener(c.getPlayListener());
+        play.setText("PLAY");
+        scaleSlider = new JSlider();
+        scaleSlider.setBorder( new CompoundBorder(new TitledBorder("Scale"),
+                               new EmptyBorder(10, 10, 10, 10) )
+                             );
+        apply.addActionListener(c.getApplyFilter(scaleSlider));
+        popup.add(scaleSlider);
+        popup.add(apply);
+        
+        /*Building new Sound frame */
+        newSound = new JFrame();
+        newSound.setTitle("New Sound");
+        newSound.setPreferredSize(new Dimension(200,100));
+        
+        /* Adding components to frame */
+        add(toolBar,BorderLayout.NORTH);
+        add(main, BorderLayout.CENTER);
+        add(southPanel, BorderLayout.SOUTH);
+        
+        /* Adding filters to menu */
+        toolBar.addScaleableFilter(new GainFilter());
         pack();
         toolBar.repaint();
         setVisible(true);
+        
+        
+        pack();
     }
     
+    public void showSlider(/*JComponent component*/)
+    {
+        popup.show(toolBar, 0, 50);
+    }
+    public void setSliderFilter(Filter f)
+    {
+        
+    }
+    public void showNewSound()
+    {
+        newSound.setVisible(true);
+    }
     private Model m;
     private Controller c;
+    private JFrame newSound;
+    private ToolBar toolBar;
+    private JPopupMenu popup;
+    private JSlider scaleSlider;
+    private JButton apply;
     public final int FRAME_WIDTH = 640;
     public final int FRAME_HEIGHT = 480;
 }

@@ -29,24 +29,6 @@ public class MainFrame extends JComponent{
     {
         Graphics2D g2d = (Graphics2D) g;
         paintBackground(g2d);
-        Iterator<Key> it= m.getKeys();
-        boolean black = true;
-        while(it.hasNext())
-        {
-            if(black)
-            {
-                g2d.setColor(Color.BLACK);
-            }else
-            {
-                g2d.setColor(Color.WHITE);
-            }
-            black = !black;
-            Key tmp = it.next();
-            if(tmp!= null)
-                tmp.draw(g2d, new Dimension(100,20) );
-        }
-        
-        //g2.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
     
     

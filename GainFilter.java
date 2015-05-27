@@ -1,18 +1,31 @@
 package aoop;
 
-public class GainFilter implements Filter{
+public class GainFilter implements ScalableFilter{
 	private double gain;
-	public GainFilter(double g){
-            if(g >= 0)
-		gain = g;
-            else
-                gain = 0.0;
+	public GainFilter(){
+            
 	}
+        public void setScale(double scale)
+        {
+            if(scale >= 0)
+            {    
+		gain = scale;
+            }
+            else
+            {
+                gain = 0.0;
+            }
+        }
 	public Sample apply(Sample s){
+            
             double[] d = s.toArray();
             for(int i = 0; i < d.length; i++){
                 d[i] *= gain;
             }
             return new Sample(d);
 	}
+        public String getName()
+        {
+            return "Gain";
+        }
 }

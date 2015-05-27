@@ -6,7 +6,6 @@
 package aoop;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.ArrayList;
 
 /**
@@ -17,61 +16,8 @@ public class Model {
     
     public Model()
     {
-        soundTypes = new LinkedList<>();
-        keys = new ArrayList<>();
-        for(int i = 0; i < 10 ; i++)
-        {
-            keys.add(new Key());
-        }
-        Sound t1 = new Tone(600.0, 0.2);
-        keys.get(0).setSound(t1);
-        Sound t2 = new Tone(600.0, 0.1);
-        t2.addFilter(new GainFilter(5));
-        keys.get(1).setSound(t2);
-        Sound w = new WhiteNoise(0.2);
-        keys.get(2).setSound(w);
-        Sound v = new WhiteNoise(0.1);
-        keys.get(3).setSound(v);
-        v.addFilter(new KarplusStrongFilter(100, 0.99));
-        
-        
-        
+       sound = new Tone(600,0.2);
     }
-    
-    
-    public Iterator<Key> getKeys()
-    {
-        return keys.iterator();
-    }
-    /*public Iterator<SoundIcon>[] getAllTracks()
-    {
-        Iterator[] it = {soundTrack[0].iterator(),
-                         soundTrack[1].iterator(),
-                         soundTrack[2].iterator(),
-                         soundTrack[3].iterator()};
-        
-        return it;
-    }
-    
-    public Iterator<SoundIcon> getTrack1()
-    {
-        return soundTrack[0].iterator();
-    }
-    
-    public Iterator<SoundIcon> getTrack2()
-    {
-        return soundTrack[1].iterator();
-    }
-    
-    public Iterator<SoundIcon> getTrack3()
-    {
-        return soundTrack[2].iterator();
-    }
-    
-    public Iterator<SoundIcon> getTrack4()
-    {
-        return soundTrack[3].iterator();
-    }*/
     
     public void addController(Controller c)
     {
@@ -83,30 +29,31 @@ public class Model {
         this.v = v;
     }
     
-    public Iterator<SoundIcon> getTypes()
-    {
-        return soundTypes.iterator();
+    
+    public void addFilter(Filter f) {
+        filters.add(f);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public void setCurrentFilter(Filter f)
+    {curFilter = f;};
     
-    public int getTypeLength()
+    public Filter getCurrentFilter()
     {
-        return soundTypes.size();
+        return curFilter;
     }
     
-    public void addType(SoundIcon s)
+    public Sound getSound()
     {
-        if(s != null)
-        {
-            soundTypes.add(s);
-        }else
-        {
-            throw new NullPointerException();
-        }
+        return sound;
     }
-    private final LinkedList<SoundIcon> soundTypes;
-    private final ArrayList<Key> keys;
+    
+    private Sound sound;
+    private Filter curFilter;
+    private ArrayList<Filter> filters;
     private Controller c;
     private View v;
     public int KEYBOARD_SIZE = 10;
+
+    
 }
