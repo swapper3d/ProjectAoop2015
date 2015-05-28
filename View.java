@@ -60,6 +60,9 @@ public class View extends JFrame
         toolBar = new ToolBar(m, c);
         popup = new JPopupMenu();
         apply = new JButton();
+        wNPopup = new JPopupMenu();
+        wNSlider = new JSlider();
+        wNApply = new JButton("Create White Noise");
         Menu menu = new Menu(m, c);
         JPanel main = new JPanel();
         main.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
@@ -74,7 +77,7 @@ public class View extends JFrame
         setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         setTitle("Sound Filtering");
         
-        /* setting up scale popup */
+        /* setting up scalable filter popup */
         apply.setText("apply");
         play.addActionListener(c.getPlayListener());
         play.setText("PLAY");
@@ -87,6 +90,14 @@ public class View extends JFrame
         popup.add(apply);
         
         buildKarplusView();
+        /* setting up create white noise popup */
+        wNPopup.add(wNSlider);
+        wNPopup.add(wNApply);
+        wNSlider.setBorder( new CompoundBorder(
+                                  new TitledBorder("Duration"),
+                                  new EmptyBorder(10, 10, 10, 10) )
+                                );
+        wNApply.addActionListener(c.getCreateWhiteNoise(wNSlider));
         /*Building new Sound frame */
         newSound = buildNewToneFrame(); 
         
@@ -157,6 +168,7 @@ public class View extends JFrame
         JButton karplusApply = new JButton("Apply");
         kPopup = new JPopupMenu();
         
+        
         karplusLSlider.setBorder( new CompoundBorder(
                                   new TitledBorder("length"),
                                   new EmptyBorder(10, 10, 10, 10) )
@@ -175,6 +187,13 @@ public class View extends JFrame
         kPopup.add(karplusApply);
     }
     
+    /**
+     *  Shows popup for creating white noise 
+     */
+    public void showWhiteNoiseSlider()
+    {
+        wNPopup.show(toolBar, 0, 50);
+    }
     /**
      *  Shows popup for scalable filters 
      */
@@ -208,8 +227,11 @@ public class View extends JFrame
     private ToolBar toolBar;
     private JPopupMenu popup;
     private JSlider scaleSlider;
+    private JSlider wNSlider;
     private JButton apply; 
+    private JButton wNApply; 
     private JPopupMenu kPopup;
+    private JPopupMenu wNPopup;
     
     public final int FRAME_WIDTH = 640;
     public final int FRAME_HEIGHT = 480;

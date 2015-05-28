@@ -23,18 +23,19 @@ public class Menu extends JMenuBar
         this.c = c;
         menu = new JMenu("File");
         newSound = new JMenu("New Sound");
-        settings = new JMenuItem("Settings");
         exit = new JMenuItem("Exit");
         newTone = new JMenuItem("New Tone");
         browse = new JMenuItem("Browse disk..");
+        noise = new JMenuItem("White Noise");
         save = new JMenuItem("Save as..");
         
         newTone.addActionListener(c.getNewToneListener()); 
         browse.addActionListener(c.getBrowseDiskListener());
         save.addActionListener(c.getSaveFileListener());
+        noise.addActionListener(c.getNewNoiseListener());
         newSound.add(browse);
-        
         newSound.add(newTone);
+        newSound.add(noise);
         add(menu);
         
         menu.add(newSound);
@@ -48,7 +49,7 @@ public class Menu extends JMenuBar
     
     private final JMenuItem newSound;
     private final JMenuItem exit;
-    private final JMenuItem settings;
+    private final JMenuItem noise;
     
     private final JMenuItem newTone;
     private final JMenuItem browse;

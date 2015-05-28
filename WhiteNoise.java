@@ -1,5 +1,8 @@
 package aoop;
 
+import aoop.Sample;
+import aoop.Sound;
+
 public class WhiteNoise extends Sound{
 	private double duration;
 	public WhiteNoise(double d){

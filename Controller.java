@@ -126,6 +126,18 @@ public class Controller {
     }
     
     /**
+     * Shows Dialoge new Tone
+     * @return new Tone Handler
+     */
+    public ActionListener getNewNoiseListener()
+    {
+        return (ActionEvent e) ->
+        {
+            v.showWhiteNoiseSlider();
+        };
+    }
+    
+    /**
      * Shows browse for file dialogue
      * @return browse handler
      */
@@ -176,6 +188,14 @@ public class Controller {
             double f = Double.parseDouble(tmp);
             double d = Double.parseDouble(dur.getText().replace(",",".").replace(" ", ""));
             m.setSound( new Tone(f,d));
+        };
+    }
+    
+    public ActionListener getCreateWhiteNoise(JSlider dur)
+    {
+        return (ActionEvent e) ->
+        {
+            m.setSound(new WhiteNoise(dur.getValue()/10));
         };
     }
     
