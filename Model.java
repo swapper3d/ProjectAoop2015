@@ -47,7 +47,14 @@ public class Model {
     {
         return sound;
     }
-    
+    public double[] getSample()
+    {
+        return sound.getSample();
+    }
+    public void setSound(Sound s)
+    {
+        sound = s;
+    }
     private Sound sound;
     private Filter curFilter;
     private ArrayList<Filter> filters;

@@ -7,12 +7,16 @@ package aoop;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -78,8 +82,12 @@ public class View extends JFrame
         
         /*Building new Sound frame */
         newSound = new JFrame();
+        newSound.setLayout(new FlowLayout());
         newSound.setTitle("New Sound");
-        newSound.setPreferredSize(new Dimension(200,100));
+        newSound.add(new JTextField("value"));
+        newSound.add(new JButton("Create sound"));
+        newSound.pack();
+        //newSound.setPreferredSize(new Dimension(200,100));
         
         /* Adding components to frame */
         add(toolBar,BorderLayout.NORTH);
@@ -96,6 +104,7 @@ public class View extends JFrame
         pack();
     }
     
+    
     public void showSlider(/*JComponent component*/)
     {
         popup.show(toolBar, 0, 50);
@@ -108,6 +117,11 @@ public class View extends JFrame
     {
         newSound.setVisible(true);
     }
+    
+    /*public void showBrowser()
+    {
+        
+    }*/
     private Model m;
     private Controller c;
     private JFrame newSound;
@@ -115,6 +129,7 @@ public class View extends JFrame
     private JPopupMenu popup;
     private JSlider scaleSlider;
     private JButton apply;
+    
     public final int FRAME_WIDTH = 640;
     public final int FRAME_HEIGHT = 480;
 }

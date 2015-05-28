@@ -5,8 +5,13 @@ public class GainFilter implements ScalableFilter{
 	public GainFilter(){
             
 	}
+        /**
+         * sets scale of filter
+         * @param scale Value of 0 to 100
+         */
         public void setScale(double scale)
         {
+            scale /= 33;
             if(scale >= 0)
             {    
 		gain = scale;

@@ -10,7 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.Iterator;
+import javax.swing.JFileChooser;
 import javax.swing.JSlider;
 
 /**
@@ -19,6 +21,12 @@ import javax.swing.JSlider;
  */
 public class Controller {
     
+    public Controller()
+    {
+        /* filechooser */
+        fc = new JFileChooser();
+        fc.setFileFilter(new WavFilter());
+    }
     public void addView(View v)
     {
         this.v = v;
@@ -33,7 +41,6 @@ public class Controller {
     {
         return new ActionListener()
         {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 m.getSound().play();
@@ -65,20 +72,87 @@ public class Controller {
     {
         return new ActionListener()
         {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 ScalableFilter tmp = (ScalableFilter)m.getCurrentFilter();
                 Sound s = m.getSound();
-                tmp.setScale(((double)scale.getValue())/10);
+                tmp.setScale(((double)scale.getValue()));
                 s.addFilter(tmp);
                 System.out.println(m.getCurrentFilter() + " applied");
-                System.out.println(((double)scale.getValue())/10 + " scale");
+                System.out.println(((double)scale.getValue()) + " scale");
             }
             
         };
     }
     
+
+    
+    public ActionListener menuExit()
+    {
+        return (ActionEvent e) -> 
+        {
+            System.exit(0);
+        };
+    }
+    
+    public ActionListener newSound()
+    {
+        return (ActionEvent e) -> 
+        {
+            v.showNewSound();
+        };
+    }
+    
+    public ActionListener settings()
+    {
+        return (ActionEvent e) -> 
+        {
+            System.exit(0);
+        };
+    }
+    
+    public ActionListener getNewSoundListener()
+    {
+        return (ActionEvent e) ->
+        {
+            v.showNewSound();
+        };
+    }
+    
+    public ActionListener getBrowseDiskListener()
+    {
+        return (ActionEvent e) ->
+        {
+            int ret = fc.showOpenDialog(v);
+            if(ret == JFileChooser.APPROVE_OPTION)
+            {
+                //fc.setDialogTitle("Select file to load");
+                File file = fc.getSelectedFile();
+                Sample s = new Sample(StdAudio.read(file.toString()));
+                m.setSound(new WavSound(s));
+            }
+        };
+    }
+    
+    public ActionListener getSaveFileListener()
+    {
+        return (ActionEvent e) ->
+        {
+            int ret = fc.showSaveDialog(v);
+            if (ret == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                StdAudio.save(file.getAbsolutePath(), m.getSample());
+                System.out.println("Save as file: " + file.getAbsolutePath());
+            }
+        };
+    }
+    private JFileChooser fc;
+
+    private Model m;
+    private View v;
+}
+
+
  /* public MouseListener getMenuDragged()
     {
         return new MouseAdapter()
@@ -134,31 +208,3 @@ public class Controller {
             }
         };
     }*/
-    
-    public ActionListener menuExit()
-    {
-        return (ActionEvent e) -> 
-        {
-            System.exit(0);
-        };
-    }
-    
-    public ActionListener newSound()
-    {
-        return (ActionEvent e) -> 
-        {
-            v.showNewSound();
-        };
-    }
-    
-    public ActionListener settings()
-    {
-        return (ActionEvent e) -> 
-        {
-            System.exit(0);
-        };
-    }
-    
-    private Model m;
-    private View v;
-}
