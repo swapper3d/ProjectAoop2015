@@ -6,8 +6,9 @@
 package aoop;
 
 /**
- *
- * @author Daniel
+ * Extension of interface filter
+ * For filters using one scale
+ * @author Daniel and Erik
  */
 public interface ScalableFilter extends Filter {
     public void setScale(double scale);

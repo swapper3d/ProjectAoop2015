@@ -1,125 +1,136 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aoop;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSlider;
 
 /**
- *
- * @author Daniel
+ * Controller of MVC pattern
+ * manages user input
+ * @author Daniel and Erik
  */
 public class Controller {
     
+    /**
+     * Constructor. Initializes filechooser
+     */
     public Controller()
     {
         /* filechooser */
         fc = new JFileChooser();
         fc.setFileFilter(new WavFilter());
     }
+    
+    /**
+     * Add view part of MVC pattern
+     * @param v view
+     */
     public void addView(View v)
     {
         this.v = v;
     }
+    
+     /**
+     * Add model part of MVC pattern
+     * @param m model
+     */
     public void addModel(Model m)
     {
         this.m = m;
     }
     
     
+    /**
+     * ActionListener for play button
+     * @return PlayHandler
+     */
     public ActionListener getPlayListener()
     {
-        return new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                m.getSound().play();
-                System.out.println("PLAY");
-            }
-            
+        return (ActionEvent e) -> {
+            m.getSound().play();
         };
     }
     
     /**
-     *
-     * @param f scaleable filter
-     * @return handler for pressing the menuitem
+     * ActionListener for scalable filters
+     * @param f scalable filter
+     * @return ScalableFilterHandler
      */
     public ActionListener getScalableFilterMenuListener(Filter f)
     {
-        return new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                m.setCurrentFilter(f);
-                v.showSlider();
-            }
-            
+        return (ActionEvent e) -> {
+            m.setCurrentFilter(f);
+            v.showSlider();
         };
     }
     
-    public ActionListener getApplyFilter(JSlider scale)
+    /**
+     * Apply scalable filter
+     * @param scale JSlider scale
+     * @return ApplyScalableHandler
+     */
+    public ActionListener getApplyScalableFilterListener(JSlider scale)
     {
-        return new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ScalableFilter tmp = (ScalableFilter)m.getCurrentFilter();
-                Sound s = m.getSound();
-                tmp.setScale(((double)scale.getValue()));
-                s.addFilter(tmp);
-                System.out.println(m.getCurrentFilter() + " applied");
-                System.out.println(((double)scale.getValue()) + " scale");
-            }
-            
+        return (ActionEvent e) -> {
+            ScalableFilter tmp = (ScalableFilter)m.getCurrentFilter();
+            Sound s = m.getSound();
+            tmp.setScale(((double)scale.getValue()));
+            s.addFilter(tmp);
+            System.out.println(m.getCurrentFilter() + " applied");
+            System.out.println(((double)scale.getValue()) + " scale");
         };
     }
     
-
-    
-    public ActionListener menuExit()
-    {
-        return (ActionEvent e) -> 
-        {
-            System.exit(0);
-        };
-    }
-    
-    public ActionListener newSound()
-    {
-        return (ActionEvent e) -> 
-        {
-            v.showNewSound();
-        };
-    }
-    
-    public ActionListener settings()
-    {
-        return (ActionEvent e) -> 
-        {
-            System.exit(0);
-        };
-    }
-    
-    public ActionListener getNewSoundListener()
+    /**
+     *  Apply Karplus Strong filter
+     * @param lSlider Length of filter
+     * @param dampSlider Damping
+     * @return Karplus Filter Handler
+     */
+    public ActionListener getApplyKarplusFilterListener(JSlider lSlider, 
+                                                        JSlider dampSlider)
     {
         return (ActionEvent e) ->
         {
-            v.showNewSound();
+            KarplusStrongFilter tmp = (KarplusStrongFilter)m.getCurrentFilter();
+            Sound s = m.getSound();
+            tmp.setScale(lSlider.getValue(), dampSlider.getValue());
+            s.addFilter(tmp);
         };
     }
     
+    /**
+     * Menu exit handler
+     * @return 
+     */
+    public ActionListener menuExitListener()
+    {
+        return (ActionEvent e) -> 
+        {
+            System.exit(0);
+        };
+    }
+   
+
+    /**
+     * Shows Dialoge new Tone
+     * @return new Tone Handler
+     */
+    public ActionListener getNewToneListener()
+    {
+        return (ActionEvent e) ->
+        {
+            v.showNewTone();
+        };
+    }
+    
+    /**
+     * Shows browse for file dialogue
+     * @return browse handler
+     */
     public ActionListener getBrowseDiskListener()
     {
         return (ActionEvent e) ->
@@ -135,6 +146,10 @@ public class Controller {
         };
     }
     
+    /**
+     * Shows save file dialogue
+     * @return save file handler
+     */
     public ActionListener getSaveFileListener()
     {
         return (ActionEvent e) ->
@@ -148,76 +163,44 @@ public class Controller {
         };
     }
     
-    public ActionListener getNewToneListener(JFormattedTextField freq, JFormattedTextField dur)
+    /**
+     * Handles create button
+     * Strings in freq and dur must be double
+     * @param freq textfield containing frequency
+     * @param dur  textfield containing duration
+     * @return 
+     */
+    public ActionListener getCreateNewToneListener(JFormattedTextField freq, JFormattedTextField dur)
     {
         return (ActionEvent e) ->
         {
-            
-            double f = Double.parseDouble(freq.getText().replace(",",".").replace(" ", "") );
+            String tmp = freq.getText().replace(",",".");
+            tmp = tmp.replaceAll("\\s+", "");
+            double f = Double.parseDouble(tmp);
             double d = Double.parseDouble(dur.getText().replace(",",".").replace(" ", ""));
             System.out.println(f);
             m.setSound( new Tone(f,d));
         };
     }
-    private JFileChooser fc;
-
-    private Model m;
-    private View v;
-}
-
-
- /* public MouseListener getMenuDragged()
+    
+    /**
+     * Handles Karplus filter menu item 
+     * @param f karplus filter
+     * @return Karplus filter handler
+     */
+    public ActionListener getKarplusStrongfilterListener(Filter f)
     {
-        return new MouseAdapter()
+        return (ActionEvent e) ->
         {
-            @Override
-            public void mouseDragged(MouseEvent e) 
-            {
-                System.out.println(e); 
-            }
+            m.setCurrentFilter(f);
+            v.showKarplus();
         };
     }
     
-    public MouseListener getMenuPressed()
-    {
-        return new MouseAdapter() 
-        {
-            @Override
-            public void mousePressed(MouseEvent e) 
-            {
-                Iterator<SoundIcon> it = m.getTypes();
-                
-                while(it.hasNext())
-                {
-                    SoundIcon tmp = it.next();
-                    if( tmp.contains( e.getPoint() ) )
-                    {
-                        tmp.getPoint();//e.getPoint();
-                        System.out.println("pressed in square");
-                    }
-                }
-                System.out.println(e.getPoint()); 
-            }
-        };
-    }
-*/    
-    /*public MouseListener getKeyPressed()
-    {
-        return new MouseAdapter()
-        {
-            @Override
-            public void mousePressed(MouseEvent e)
-            {
-                Iterator<Key> it = m.getKeys();
-                while(it.hasNext())
-                {
-                    Key tmp = it.next();
-                    if(tmp.contains(e.getPoint()))
-                    {
-                        tmp.play();
-                        System.out.println("Play Sound");
-                    }
-                }
-            }
-        };
-    }*/
+    /**
+     * field variables
+     */
+    private final JFileChooser fc;
+    private Model m;
+    private View v;
+}

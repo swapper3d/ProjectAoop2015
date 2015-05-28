@@ -5,62 +5,93 @@
  */
 package aoop;
 
-import java.util.Iterator;
 import java.util.ArrayList;
 
 /**
- *
- * @author Daniel
+ * Model of MVC pattern
+ * Contains all data models
+ * @author Daniel and Erik
  */
 public class Model {
     
+    /**
+     * default constructor.
+     * creates a tone
+     */
     public Model()
     {
        sound = new Tone(600,0.2);
     }
     
+    /**
+     * Add controller part of MVC pattern
+     * @param c controller
+     */
     public void addController(Controller c)
     {
         this.c = c;
     }
     
+    /**
+     * Add view part of MVC pattern
+     * @param v view
+     */
     public void addView(View v)
     {
         this.v = v;
     }
     
     
-    public void addFilter(Filter f) {
-        filters.add(f);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Sets current filter to f
+     * @param f filter to use
+     */
+    public void setCurrentFilter(Filter f)
+    {
+        curFilter = f;
     }
     
-    public void setCurrentFilter(Filter f)
-    {curFilter = f;};
-    
+    /**
+     * Gets active filter
+     * @return active filter
+     */
     public Filter getCurrentFilter()
     {
         return curFilter;
     }
     
+    /**
+     * Gets current sound
+     * @return current sound
+     */
     public Sound getSound()
     {
         return sound;
     }
-    public double[] getSample()
-    {
-        return sound.getSample();
-    }
+    
+    /**
+     * Sets current sound to s
+     * @param s new sound
+     */
     public void setSound(Sound s)
     {
         sound = s;
     }
+    
+    /**
+     * Gets samples of current sound
+     * @return current samples
+     */
+    public double[] getSample()
+    {
+        return sound.getSample();
+    }
+    
+    /**
+     * field variables
+     */
     private Sound sound;
     private Filter curFilter;
-    private ArrayList<Filter> filters;
     private Controller c;
     private View v;
-    public int KEYBOARD_SIZE = 10;
-
-    
 }

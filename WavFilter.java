@@ -1,19 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aoop;
 
 import java.io.File;
 import javax.swing.filechooser.*;
 
 /**
- *
- * @author Daniel
+ * Filters out all files but .wav
+ * @author Daniel and Erik
  */
 public class WavFilter extends FileFilter{
 
+    /**
+     * Sets which files to be accepted
+     * @param f file to be checked
+     * @return if file is .wav or not
+     */
     @Override
     public boolean accept(File f) {
         if(f.isDirectory())
@@ -27,6 +27,10 @@ public class WavFilter extends FileFilter{
         return extension.equalsIgnoreCase("wav");
     }
 
+    /**
+     * Description
+     * @return description of file
+     */
     @Override
     public String getDescription() {
         return "*.wav";

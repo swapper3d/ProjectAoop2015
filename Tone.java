@@ -1,22 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aoop;
 
 /**
- *
- * @author erik
+ * A simple tone
+ * @author Erik and Daniel
  */
 
 public class Tone extends Sound{
-    private double frequency;
-    private double duration;
+    
+    /**
+     * creates a tone with frequency freq and duration
+     * @param freq
+     * @param d 
+     */
     public Tone(double freq, double d){
         frequency = freq;
         duration = d;
     }
+    
+    /**
+     * generates Sample
+     * @return Sample with sound
+     */
     @Override
     public Sample generateSample() {
         int l = (int)(SAMPLING_RATE*duration);
@@ -28,4 +32,6 @@ public class Tone extends Sound{
         return new Sample(tone);
     }
     
+    private double frequency;
+    private double duration;    
 }

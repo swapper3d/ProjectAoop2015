@@ -1,6 +1,6 @@
 package aoop;
 
-import java.util.ArrayDeque;
+
 import java.util.LinkedList;
 
 /*
@@ -11,43 +11,73 @@ import java.util.LinkedList;
 
 /**
  *
- * @author erik
+ * @author Erik and Daniel
  */
 public class KarplusStrongFilter implements Filter{
-    int length;
-    double damping;
+
+    public KarplusStrongFilter()
+    {}
     
-    public KarplusStrongFilter(int l, double d){
+    /**
+     * Configures filter to l and d
+     * rescales d to (d-1)/100
+     * rescales l to l/10
+     * @param l length range 0-> 100
+     * @param d damping range 0->100
+     */
+    public void setScale(int l, double d){
+        d --;
+        d/=100;
+        l /=10;
         length = l;
-        if(damping < 1.0)
+        if(d< 1.0)
             damping = d;
         else 
             damping = 0.99;
+        
+        System.out.println(damping);
     }
     
+    /**
+     * Applies filter to Sample s
+     * @param s sound sample to filter
+     * @return
+     */
     @Override
-    public Sample apply(Sample s) {
-        //funkar riktigt dåligt.. pseudokod http://courses.cs.washington.edu/courses/cse373/12au/homework/hw01/karplus_strong.shtml
-        LinkedList<Double> Q1 = new LinkedList();
-        LinkedList<Double> Q2 = new LinkedList();
-        double[] d = s.toArray();
-        for(Double e : d){
-            Q1.add(e);
-        }
+    public Sample apply(Sample s) 
+    {
+        LinkedList<Double> Q1 = new LinkedList<>();
+        LinkedList<Double> Q2 = new LinkedList<>();
+        double[] output = new double[length*44100];
         Q2.add(0.0);
-        Double a,b;
-        for(int m = 0; m < length*44100; m++){
-            a = Q1.remove();
-            b = Q2.remove();
-            Double c = damping * (double)a*b/2;    //average
-            Q1.add(c);
-            Q2.add(a);
+
+        for(double d:s.toArray())
+        {
+            Q1.add(d);
         }
-        double[] bb = new double[Q1.size()];
-        for(int i = 0; !Q1.isEmpty(); i++){
-            d[i] = Q1.remove();
+        for(int m = 0; m<length*44100;m++)
+        {
+           double a = Q1.remove();
+           double o = damping* (a + Q2.remove())/2;
+           Q1.add(o);
+           Q2.add(a);
+           output[m] = (o);
         }
-        return new Sample(d);
-    }  
+        return new Sample(output);
+    }
+         
+    /**
+     * Name of filter
+     * @return name of filter
+     */
+    @Override
+    public String getName()
+    {
+        return "Karplus filter";
+    }
+    
+    private int length;
+    private double damping;
+    
 }
 

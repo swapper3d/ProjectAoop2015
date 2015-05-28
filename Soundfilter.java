@@ -6,8 +6,8 @@
 package aoop;
 
 /**
- *
- * @author Daniel
+ * Starting point of application
+ * @author Daniel and Erik
  */
 public class Soundfilter {
 

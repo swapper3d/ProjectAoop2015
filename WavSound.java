@@ -1,24 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aoop;
 
 /**
- *
- * @author Daniel
+ * Extension of Sound class
+ * for imported wavfiles
+ * @author Daniel and Erik
  */
 public class WavSound extends Sound{
-    private Sample sample;
-    
+
+    /**
+     * Constructor
+     * @param s soundsamples
+     */
     public WavSound(Sample s)
     {
         sample = s;
     }
+    /**
+     * returns samples
+     * @return sample
+     */
     @Override
     public Sample generateSample() {
         return sample;
     }
-    
+    private Sample sample;
 }
