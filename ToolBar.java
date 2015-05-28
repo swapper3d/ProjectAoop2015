@@ -22,7 +22,6 @@ public class ToolBar extends JPanel{
         this.m = m;
         this.c = c;
         setLayout(new FlowLayout());
-        //sounds = new LinkedList<>();
         this.setPreferredSize(new Dimension(50,50));
     }
     
@@ -35,7 +34,7 @@ public class ToolBar extends JPanel{
     {
         JButton newButton = new JButton();
         newButton.setText(f.getName());
-        newButton.setPreferredSize(new Dimension(60,40));
+        newButton.setPreferredSize(new Dimension(110,40));
         newButton.addActionListener(l);
         add(newButton);
     }

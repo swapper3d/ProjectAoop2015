@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package aoop;
 
 
@@ -12,10 +8,15 @@ import javax.swing.JMenuItem;
 
 /**
  *
- * @author Daniel
+ * @author Daniel and Erik
  */
 public class Menu extends JMenuBar
 {
+    /**
+     * Constructor. Sets up the menu
+     * @param m Model of MVC
+     * @param c Controller of MVC
+     */
     public Menu(final Model m, final Controller c)
     {
         this.m = m;

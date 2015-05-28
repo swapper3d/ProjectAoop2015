@@ -168,7 +168,7 @@ public class View extends JFrame
         karplusApply.addActionListener( c.getApplyKarplusFilterListener(
                                                             karplusLSlider, 
                                                             karplusDampSlider)
-                                        );
+                                       );
         
         kPopup.add(karplusLSlider);
         kPopup.add(karplusDampSlider);
@@ -199,7 +199,9 @@ public class View extends JFrame
         newSound.setVisible(true);
     }
     
-   
+    
+    
+    
     private Model m;
     private Controller c;
     private JFrame newSound;

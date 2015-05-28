@@ -79,8 +79,6 @@ public class Controller {
             Sound s = m.getSound();
             tmp.setScale(((double)scale.getValue()));
             s.addFilter(tmp);
-            System.out.println(m.getCurrentFilter() + " applied");
-            System.out.println(((double)scale.getValue()) + " scale");
         };
     }
     
@@ -158,7 +156,6 @@ public class Controller {
             if (ret == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 StdAudio.save(file.getAbsolutePath(), m.getSample());
-                System.out.println("Save as file: " + file.getAbsolutePath());
             }
         };
     }
@@ -178,7 +175,6 @@ public class Controller {
             tmp = tmp.replaceAll("\\s+", "");
             double f = Double.parseDouble(tmp);
             double d = Double.parseDouble(dur.getText().replace(",",".").replace(" ", ""));
-            System.out.println(f);
             m.setSound( new Tone(f,d));
         };
     }
@@ -196,7 +192,7 @@ public class Controller {
             v.showKarplus();
         };
     }
-    
+       
     /**
      * field variables
      */
