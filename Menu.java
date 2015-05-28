@@ -28,7 +28,7 @@ public class Menu extends JMenuBar
         newTone = new JMenuItem("New Tone");
         browse = new JMenuItem("Browse disk..");
         save = new JMenuItem("Save as..");
-        //soundMenu = new JMenu();
+        
         newTone.addActionListener(c.getNewSoundListener()); 
         browse.addActionListener(c.getBrowseDiskListener());
         save.addActionListener(c.getSaveFileListener());
@@ -38,7 +38,7 @@ public class Menu extends JMenuBar
         add(menu);
         
         menu.add(newSound);
-        menu.add(settings);
+        //menu.add(settings);
         menu.add(exit);
         
         
@@ -47,18 +47,18 @@ public class Menu extends JMenuBar
         exit.addActionListener(c.menuExit());
     }
     
-    private JMenu menu;
+    private final JMenu menu;
     //private JMenu soundMenu;
     
-    private JMenuItem newSound;
-    private JMenuItem exit;
-    private JMenuItem settings;
+    private final JMenuItem newSound;
+    private final JMenuItem exit;
+    private final JMenuItem settings;
     
-    private JMenuItem newTone;
-    private JMenuItem browse;
-    private JMenuItem save;
+    private final JMenuItem newTone;
+    private final JMenuItem browse;
+    private final JMenuItem save;
     
-    private Model m;
-    private Controller c;
+    private final Model m;
+    private final Controller c;
     
 }

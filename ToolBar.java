@@ -24,13 +24,16 @@ public class ToolBar extends JPanel{
         this.setPreferredSize(new Dimension(50,50));
     }
     
-    
-    public void addScaleableFilter(Filter f)
+    public void addFilter(Filter f)
+    {
+        
+    }
+    public void addFilter(ScalableFilter f)
     {
         JButton newButton = new JButton();
         newButton.setText(f.getName());
         newButton.setPreferredSize(new Dimension(60,40));
-        newButton.addActionListener( c.getScaleableFilterMenuListener(f) );
+        newButton.addActionListener( c.getScalableFilterMenuListener(f) );
         //m.addFilter(f);
         this.add(newButton);
     }

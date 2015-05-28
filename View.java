@@ -8,10 +8,16 @@ package aoop;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.text.NumberFormat;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSlider;
@@ -20,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -40,15 +47,7 @@ public class View extends JFrame
         this.c = c;
     }
     
-    /**
-     * adds filter. needs build() to have been done
-     * @param f filter to be added
-     */
-    /*public void addFilter(Filter f)
-    {
-        //toolBar.addFilter(f);
-        //pack();
-    }*/
+   
     
     public void build()
     {
@@ -81,12 +80,7 @@ public class View extends JFrame
         popup.add(apply);
         
         /*Building new Sound frame */
-        newSound = new JFrame();
-        newSound.setLayout(new FlowLayout());
-        newSound.setTitle("New Sound");
-        newSound.add(new JTextField("value"));
-        newSound.add(new JButton("Create sound"));
-        newSound.pack();
+        newSound = buildNewSoundFrame(); 
         //newSound.setPreferredSize(new Dimension(200,100));
         
         /* Adding components to frame */
@@ -95,7 +89,7 @@ public class View extends JFrame
         add(southPanel, BorderLayout.SOUTH);
         
         /* Adding filters to menu */
-        toolBar.addScaleableFilter(new GainFilter());
+        toolBar.addFilter(new GainFilter());
         pack();
         toolBar.repaint();
         setVisible(true);
@@ -104,24 +98,53 @@ public class View extends JFrame
         pack();
     }
     
+    private JFrame buildNewSoundFrame()
+    {
+        JFrame frame = new JFrame();
+        JButton create = new JButton("Create sound");
+        NumberFormat format = NumberFormat.getNumberInstance();
+        JFormattedTextField dur = new JFormattedTextField(format);
+        JFormattedTextField freq = new JFormattedTextField(format);
+        frame.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        frame.setTitle("New Sound");
+        
+        create.addActionListener(this.c.getNewToneListener( freq, 
+                                                            dur
+                                                           ));
+        
+        c.gridx = 0;
+        c.gridy = 0;
+        frame.add(new JLabel("frequency"),c);
+        c.gridx = 1;
+        c.ipadx = 80;
+        frame.add(freq,c);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.ipadx = 0;
+        frame.add(new JLabel("duration"),c);
+        c.gridx = 1;
+        c.ipadx = 80;
+        frame.add(dur,c);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 2;
+        frame.add(create,c);
+        frame.pack();
+        return frame;
+    }
     
     public void showSlider(/*JComponent component*/)
     {
         popup.show(toolBar, 0, 50);
     }
-    public void setSliderFilter(Filter f)
-    {
-        
-    }
+
     public void showNewSound()
     {
         newSound.setVisible(true);
     }
     
-    /*public void showBrowser()
-    {
-        
-    }*/
+   
     private Model m;
     private Controller c;
     private JFrame newSound;
@@ -133,3 +156,21 @@ public class View extends JFrame
     public final int FRAME_WIDTH = 640;
     public final int FRAME_HEIGHT = 480;
 }
+ /**
+     * adds filter. needs build() to have been done
+     * @param f filter to be added
+     */
+    /*public void addFilter(Filter f)
+    {
+        //toolBar.addFilter(f);
+        //pack();
+    }*/
+ /*public void showBrowser()
+    {
+        
+    }*/
+   /* public void setSliderFilter(Filter f)
+    {
+        
+    }
+    */

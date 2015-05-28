@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Iterator;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JSlider;
 
 /**
@@ -55,7 +56,7 @@ public class Controller {
      * @param f scaleable filter
      * @return handler for pressing the menuitem
      */
-    public ActionListener getScaleableFilterMenuListener(Filter f)
+    public ActionListener getScalableFilterMenuListener(Filter f)
     {
         return new ActionListener()
         {
@@ -144,6 +145,18 @@ public class Controller {
                 StdAudio.save(file.getAbsolutePath(), m.getSample());
                 System.out.println("Save as file: " + file.getAbsolutePath());
             }
+        };
+    }
+    
+    public ActionListener getNewToneListener(JFormattedTextField freq, JFormattedTextField dur)
+    {
+        return (ActionEvent e) ->
+        {
+            
+            double f = Double.parseDouble(freq.getText().replace(",",".").replace(" ", "") );
+            double d = Double.parseDouble(dur.getText().replace(",",".").replace(" ", ""));
+            System.out.println(f);
+            m.setSound( new Tone(f,d));
         };
     }
     private JFileChooser fc;
